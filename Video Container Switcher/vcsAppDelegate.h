@@ -15,6 +15,8 @@
     IBOutlet NSButton *outputPathCheckbox;
     IBOutlet NSButton *pickOutputPath;
     IBOutlet NSButton *keepFile;
+    IBOutlet NSButton *ConvertButton;
+    IBOutlet NSButton *CancelButton;
     IBOutlet NSTextField *Converting;
     IBOutlet NSProgressIndicator *spinningWheel;
     IBOutlet NSTextField *DoneLabel;
@@ -30,6 +32,8 @@
 - (IBAction)clickPathButton:(id)sender;
 
 - (IBAction)clickConvertButton:(id)sender;
+
+- (IBAction)clickCancelButton:(id)sender;
 
 - (IBAction)hideShowHUD:(id)sender;
 

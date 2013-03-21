@@ -104,9 +104,11 @@
     /* Is the HUD visible? */
     bool HUDvisible = [_HUD isVisible];
     
-    /* show spinning wheel etc. */
+    /* show spinning wheel, Cancel Button, etc. */
     [DoneLabel setHidden:TRUE];
     [Converting setHidden:FALSE];
+    [ConvertButton setHidden:TRUE];
+//    [CancelButton setHidden:FALSE];
     [spinningWheel setHidden:FALSE];
     [spinningWheel startAnimation:sender];
     
@@ -156,7 +158,7 @@
          
          /* concatenate execution command and arguments */
          NSArray *argumentsArray =
-            [NSArray arrayWithObjects:@"-i", inFile, @"-acodec", @"copy", @"-vcodec", @"copy", @"-y", outFile, nil];
+            [NSArray arrayWithObjects:@"-i", inFile, @"-c", @"copy", @"-y", outFile, nil];
          NSString *execPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"ffmpeg"];
          
          /* call conversion command and wait until it's finished */
@@ -170,12 +172,13 @@
          [conversiontask setStandardError:pipe];
          [conversiontask launch];
 
-         [conversiontask waitUntilExit];
          handle = [pipe fileHandleForReading];
          NSString *outputLines = [[NSString alloc]
                                   initWithData:[handle readDataToEndOfFile]
                                   encoding:NSASCIIStringEncoding];
          [HUDDisplayText insertText:outputLines];
+
+         [conversiontask waitUntilExit];
          
          /* if ffmpeg does not exit with code 0 */
          if ([conversiontask terminationStatus] != 0) {
@@ -205,8 +208,16 @@
     [Converting setHidden:TRUE];
     [spinningWheel setHidden:TRUE];
     [DoneLabel setHidden:FALSE];
+//    [CancelButton setHidden:TRUE];
+    [ConvertButton setHidden:FALSE];
     
 }
+
+- (IBAction)clickCancelButton:(id)sender;
+{
+    
+}
+
 
 
 @end
